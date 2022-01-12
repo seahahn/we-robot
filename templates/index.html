@@ -21,12 +21,12 @@
 <body>
 
   <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
-    <div class="w3-display-topleft w3-padding-large w3-xlarge" style="color: #000">
+    <div class="w3-display-topleft w3-padding-large w3-xxxlarge" style="color: #000">
       We-ro
     </div>
-    <div class="w3-display-middle w-50">
+    <div class="w3-display-middle w-50 h-50">
       <h1 id='loading' class="w3-jumbo w3-animate-top">Loading ...</h1>
-      <div id="chatContent" class="message_holder" style="height:300px; min-width:400px; width:100%; overflow-y: scroll; background-color: #fff;"></div>
+      <div id="chatContent" class="message_holder h-100" style="height:300px; min-width:400px; width:100%; overflow-y: scroll; background-color: #fff;"></div>
       <hr class="w3-border-grey" style="margin:auto;width:100%">
       <form class="row" action="" method="POST" style="--bs-gutter-x: 0;">
           <input type="text" class="username col-2" placeholder="닉네임"/>
@@ -74,7 +74,7 @@
       console.log( msg )
       if( typeof msg.user_name !== 'undefined' ) {
         $( '#loading' ).remove()
-        $( 'div.message_holder' ).append( '<div style="color: #000"><b>'+msg.user_name+'</b> '+msg.message+'</div>' )
+        $( 'div.message_holder' ).append( '<div style="color: #000; font-size: 1.5rem;"><b>'+msg.user_name+'</b> '+msg.message+'</div>' )
         $('#chatContent').scrollTop($('#chatContent')[0].scrollHeight)
       }
     })
