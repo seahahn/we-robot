@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat with We-robot</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/bootstrap.min.css">
+  <link rel="stylesheet" href="static/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <style>
+  body,h1 {font-family: "Raleway", sans-serif}
+  body, html {height: 100%}
+  .bgimg {
+    background-image: url('static/forest.jpg');
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+  }
+  </style>
+</head>
+<body>
+
+  <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+    <div class="w3-display-topleft w3-padding-large w3-xlarge" style="color: #000">
+      We-ro
+    </div>
+    <div class="w3-display-middle w-50">
+      <h1 id='loading' class="w3-jumbo w3-animate-top">Loading ...</h1>
+      <div id="chatContent" class="message_holder" style="height:300px; min-width:400px; width:100%; overflow-y: scroll; background-color: #fff;"></div>
+      <hr class="w3-border-grey" style="margin:auto;width:100%">
+      <form class="row" action="" method="POST" style="--bs-gutter-x: 0;">
+          <input type="text" class="username col-2" placeholder="닉네임"/>
+          <input type="text" class="message col-8" placeholder="메시지를 입력해주세요! (한글로만 대화 가능)"/>
+          <input type="submit" class="col-2"/>
+      </form>
+    </div>
+    <div class="w3-display-bottomleft w3-padding-large">
+      Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a>
+    </div>
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    // 사용자 입장 시 접속 상태 전송과 함께 닉네임 및 메시지 입력 창 초기화
+    socket.on( 'connect', function() {
+      socket.emit( 'join', {
+        data: 'User Connected'
+      } )
+
+      // 메시지 서버로 보내기(서버 거친 후 클라이언트 쪽으로 다시 옴)
+      var form = $( 'form' ).on( 'submit', function( e ) {
+        e.preventDefault()
+        let user_name = $( 'input.username' ).val()
+        let user_input = $( 'input.message' ).val()
+        socket.emit( 'send', {
+          user_name : user_name,
+          message : user_input
+        } )
+        $( 'input.message' ).val( '' ).focus()
+      } )
+    } )
+
+    // 사용자 접속 상태 콘솔 로그 출력시켜보기
+    socket.on( 'user_state', function( data ) {
+      console.log(data)
+    } )
+
+    // 보낸 메시지 채팅창에 출력하기
+    socket.on( 'response', function( msg ) {
+      console.log( msg )
+      if( typeof msg.user_name !== 'undefined' ) {
+        $( '#loading' ).remove()
+        $( 'div.message_holder' ).append( '<div style="color: #000"><b>'+msg.user_name+'</b> '+msg.message+'</div>' )
+        $('#chatContent').scrollTop($('#chatContent')[0].scrollHeight)
+      }
+    })
+  </script>
+</body>
+</html>
