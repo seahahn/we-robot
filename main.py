@@ -21,7 +21,7 @@ def make_conversation(json, methods=['GET', 'POST']):
     room = request.sid
     if detected == 'ko':
         socketio.emit('response', json, to=room) # 사용자 메시지 출력
-        
+
         chatbot_resp = model.chat(msg) # 챗봇 메시지 요청하기
         # chatbot_resp = "챗봇의 메시지가 도착했다!"
         json = {
@@ -43,7 +43,7 @@ def on_join(data):
     room = request.sid
     join_room(room)
     socketio.emit('user_state', data, to=room)
-    
+
     json = {
             'user_name': 'We-robot',
             'message': '안녕하세요! 저는 당신을 위한 We-robot 입니다.'
@@ -58,5 +58,8 @@ def test_disconnect():
     leave_room(room)
     print('user out: ' + str(room))
 
-if __name__ == '__main__':
+def run_app():
     socketio.run(app, debug=True)
+
+if __name__ == '__main__':
+    run_app()

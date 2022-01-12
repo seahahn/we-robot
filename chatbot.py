@@ -20,11 +20,6 @@ parser.add_argument('--model_params',
                     default='model_chp/model_best.ckpt',
                     help='model binary for starting chat')
 
-parser.add_argument('--train',
-                    action='store_true',
-                    default=False,
-                    help='for training')
-
 U_TKN = '<usr>'
 S_TKN = '<sys>'
 BOS = '</s>'
