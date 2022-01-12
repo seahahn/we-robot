@@ -28,4 +28,5 @@ EXPOSE 5000
 
 # CMD: 컨테이너 시작 시 실행되는 명령어로 위 ENTRYPOINT 명령어 뒤 인자로 실행하게 된다. 
 # 결국 python main.py 명령어 실행 
-CMD [ "python main.py" ]
+# CMD [ "python", "main.py" ]
+CMD [ "gunicorn", "--workers=2", "main:socketio" ]
