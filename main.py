@@ -53,13 +53,10 @@ def on_join(data):
 
 # 사용자 연결 종료 시 방 없애기
 @socketio.on('disconnect')
-def test_disconnect():
+def on_disconnect():
     room = request.sid
     leave_room(room)
     print('user out: ' + str(room))
 
-def run_app():
-    socketio.run(app, debug=True)
-
 if __name__ == '__main__':
-    run_app()
+    socketio.run(app, debug=True)
