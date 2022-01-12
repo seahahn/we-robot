@@ -1,1 +1,1 @@
-web: gunicorn --workers=1 'python main.py'
+web: gunicorn --workers=2 'python main.py'
