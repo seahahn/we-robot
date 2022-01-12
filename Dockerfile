@@ -24,8 +24,8 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # ENTRYPOINT: 컨테이너 시작 시 기본으로 실행되는 명령어 
-ENTRYPOINT [ "python" ]
+# ENTRYPOINT [ "python" ]
 
 # CMD: 컨테이너 시작 시 실행되는 명령어로 위 ENTRYPOINT 명령어 뒤 인자로 실행하게 된다. 
-# 결국 python app.py 명령어 실행 
-CMD [ "main.py" ]
+# 결국 python main.py 명령어 실행 
+CMD [ "python main.py" ]
