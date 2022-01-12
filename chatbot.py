@@ -17,7 +17,7 @@ parser.add_argument('--sentiment',
 
 parser.add_argument('--model_params',
                     type=str,
-                    default='model_chp/model_best.ckpt',
+                    default='model_best.pt',
                     help='model binary for starting chat')
 
 U_TKN = '<usr>'
@@ -68,5 +68,7 @@ class KoGPT2Chat(LightningModule):
 
 
 args = parser.parse_args()
-model = KoGPT2Chat.load_from_checkpoint(args.model_params)
+model = KoGPT2Chat(args)
+model.load_state_dict(torch.load(args.model_params))
+# model = KoGPT2Chat.load_from_checkpoint(args.model_params)
 # model.chat()
